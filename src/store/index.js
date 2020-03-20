@@ -12,4 +12,4 @@ const configureStore = preloadedState =>createStore(
     )
 )
 
-export default configureStore()
+export default configureStore();

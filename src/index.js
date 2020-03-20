@@ -4,7 +4,8 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import "nprogress/nprogress.css";
 
-import Router from "./router";
+// import Router from "./router";
+import Router from './App'
 
 import store from "./store";
 
