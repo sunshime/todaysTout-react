@@ -9,7 +9,7 @@ class Home extends Component {
   render() {
     return (
       <div className="header">
-        <div>
+        <div className="logo">
           <img src={require("../../assets/logo.png")} alt="" />
         </div>
         <div className="search">

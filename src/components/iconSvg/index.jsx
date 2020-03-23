@@ -1,18 +1,21 @@
-import { React, Component } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 class IconSvg extends Component {
-  state = {};
-
-  //   设置传递过来的值的类型
   static propsTypes = {
+    // classByName: PropTypes.string,
     iconName: PropTypes.string.isRequired,
-    onClick: PropTypes.func
+    clickSearch: PropTypes.func
   };
+  state = {};
   render() {
-    let { className, iconName, onClick } = this.props;
+    let { className, clickSearch, iconName } = this.props;
     return (
-      <svg className={`icon ${className}`} aria-hidden="true" onClick={onClick}>
+      <svg
+        className={`icon ${className}`}
+        aria-hidden="true"
+        onClick={clickSearch}
+      >
         <use xlinkHref={`#icon-${iconName}`}></use>
       </svg>
     );
