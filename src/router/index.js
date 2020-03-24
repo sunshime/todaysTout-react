@@ -1,25 +1,22 @@
-import React from "react";
+import React, { Component } from "react";
 import { Route, Switch, Redirect, HashRouter } from "react-router-dom";
 import { AnimatedSwitch } from "react-router-transition";
 import { routes, layoutRouterMap, noLayoutRouterMap } from "./config";
-import Loyout from "../App";
-// import GlobalComponents from 'components/GlobalComponents'
+// import { css } from "glamor";
+import Layout from "../App";
 
-import { css } from "glamor";
-
-const renderRouteComponent = routes =>
+const renderRouteComponent = routes => {
+  console.log("routes===>", routes);
   routes.map((route, index) => {
-    // if (route.auth) {
-    //     return <AuthRoute key={index} {...route}/>
-    // } else {
-    //     return <Route key={index} {...route}/>
-    // }
-    return <Route key={index} {...route} />;
+    console.log("route====>", route);
+    return <Route key={index + route} {...route} />;
   });
-const noLayoutRouter = renderRouteComponent(noLayoutRouterMap);
-const layoutRouter = renderRouteComponent(layoutRouterMap);
+};
 
-const pageTransitionsFn = status => {
+const layoutRouter = renderRouteComponent(layoutRouterMap);
+const noLayoutRouter = renderRouteComponent(noLayoutRouterMap);
+
+const pageTransitionFn = status => {
   let obj = {};
   if (status === "left" || status === "top") {
     obj = {
@@ -42,6 +39,7 @@ const pageTransitionsFn = status => {
   }
   return obj;
 };
+
 const mapStyleFn = status => styles => {
   let obj = {};
   if (status === "left" || status === "right") {
@@ -57,30 +55,31 @@ const mapStyleFn = status => styles => {
   }
   return obj;
 };
-const wrapperRule = css`
-  width: "100%";
-  height: "100%";
-  position: "absolute";
-  left: 0;
-  top: 0;
-`;
 
-class Router extends React.Component {
+class Router extends Component {
+  state = {};
   render() {
     return (
-      <div className={wrapperRule}>
+      <div
+        style={{
+          width: "100%",
+          height: "100%",
+          position: "absolute",
+          left: 0,
+          top: 0
+        }}
+      >
         <HashRouter>
           <Route
             render={({ location, history }) => {
               history.slideStatus =
                 history.slideStatus ||
                 (history.action === "POP" ? "right" : history.slideStatus);
-              const pageTransitions = pageTransitionsFn(history.slideStatus);
+              const pageTransitions = pageTransitionFn(history.slideStatus);
               const mapStyle = mapStyleFn(history.slideStatus);
               history.slideStatus = false;
               return (
                 <div style={{ width: "100%", height: "100%" }}>
-                  {/* <GlobalComponents/> */}
                   <AnimatedSwitch
                     {...pageTransitions}
                     runOnMount={location.pathname === "/"}
@@ -91,18 +90,18 @@ class Router extends React.Component {
                     <Route
                       render={props => {
                         return (
-                          <Loyout {...props}>
+                          <Layout {...props}>
                             <Route
                               render={() => {
                                 return (
                                   <Switch>
                                     {layoutRouter}
-                                    <Redirect from="*" to="/404" />
+                                    <Redirect from="*" to="/404/" />
                                   </Switch>
                                 );
                               }}
                             />
-                          </Loyout>
+                          </Layout>
                         );
                       }}
                     />
@@ -116,4 +115,5 @@ class Router extends React.Component {
     );
   }
 }
+
 export default Router;
