@@ -4,13 +4,9 @@ import { AnimatedSwitch } from "react-router-transition";
 import { routes, layoutRouterMap, noLayoutRouterMap } from "./config";
 import Layout from "../App";
 
-const renderRouteComponent = routes => {
-  console.log("routes===>", routes);
-  routes.map((route, index) => {
-    console.log("route====>", route);
-    return <Route key={index + route} {...route} />;
-  });
-};
+const renderRouteComponent = routes => routes.map((route, index) => {
+  return <Route key={index + route} {...route} />;
+});
 
 const layoutRouter = renderRouteComponent(layoutRouterMap);
 const noLayoutRouter = renderRouteComponent(noLayoutRouterMap);
